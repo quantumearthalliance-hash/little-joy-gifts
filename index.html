@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171326">
+<title>Little Joy — Personal Gift Maker</title>
+<style>
+:root{--bg:#100f1b;--panel:#1d1a2c;--panel2:#272239;--ink:#fff8ff;--muted:#c8bfd7;--pink:#ff79b7;--gold:#ffd98b;--line:#403751}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#30203c 0,#100f1b 55%);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+header{padding:25px 16px 15px;text-align:center}header .logo{font-size:2rem}h1{margin:5px 0;font-size:clamp(1.7rem,6vw,2.5rem)}header p{margin:6px auto;color:var(--muted);max-width:600px}
+main{width:min(1100px,100%);margin:auto;padding:12px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.card{background:rgba(29,26,44,.94);border:1px solid var(--line);border-radius:20px;padding:17px;box-shadow:0 12px 35px #0003;min-width:0}
+h2{font-size:1.12rem;margin:0 0 13px}label{display:block;font-size:.9rem;color:var(--muted);margin:12px 0 6px}
+input,textarea,select{width:100%;border:1px solid #514661;background:#141220;color:var(--ink);padding:12px;border-radius:11px;font:inherit}
+textarea{min-height:85px;resize:vertical}button{border:0;border-radius:12px;padding:12px 15px;font:inherit;font-weight:700;cursor:pointer}
+.primary{background:linear-gradient(100deg,#ff79b7,#ffc17c);color:#261323}.secondary{background:#342b47;color:var(--ink);border:1px solid #514661}.buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.buttons button{flex:1}
+.templates{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.template{background:#29243b;color:var(--ink);border:1px solid #514661;padding:10px 4px;font-size:.82rem}.template.active{border-color:var(--pink);box-shadow:inset 0 0 0 1px var(--pink)}
+.preview-wrap{display:flex;align-items:center;justify-content:center;min-height:430px;padding:12px;background:#141220;border-radius:15px;overflow:hidden}
+.gift{position:relative;overflow:hidden;width:100%;max-width:420px;min-height:390px;border-radius:19px;padding:28px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#5b2555,#221b45);border:1px solid #ffffff35}
+.gift:before,.gift:after{content:"✦　·　✧　·　✦";position:absolute;color:#fff8;letter-spacing:8px;font-size:1rem;animation:twinkle 3s ease-in-out infinite}.gift:before{top:15px;left:10px}.gift:after{bottom:15px;right:10px}
+.gift .emoji{font-size:4rem;line-height:1.3;filter:drop-shadow(0 5px 12px #0003)}.gift .eyebrow{letter-spacing:3px;text-transform:uppercase;font-size:.72rem;margin:16px 0 5px;opacity:.85}.gift h3{font-family:Georgia,serif;font-size:clamp(1.7rem,6vw,2.3rem);line-height:1.15;margin:5px 0 12px;overflow-wrap:anywhere}.gift .message{white-space:pre-wrap;line-height:1.6;max-width:330px;overflow-wrap:anywhere}.gift .from{margin-top:22px;font-style:italic;opacity:.9}
+@keyframes twinkle{50%{opacity:.35;transform:scale(.97)}}.birthday{background:linear-gradient(145deg,#793a6c,#ec7b83)}.flowers{background:linear-gradient(145deg,#23574e,#a15c83)}.friendship{background:linear-gradient(145deg,#1e4f7b,#7353a2)}.letter{background:linear-gradient(145deg,#6b493b,#c1816d);color:#fff8ec}
+.status{font-size:.87rem;color:var(--muted);margin-top:10px;overflow-wrap:anywhere}.hint{color:var(--muted);font-size:.82rem;line-height:1.5}.hidden{display:none!important}
+footer{text-align:center;padding:18px;color:var(--muted);font-size:.82rem}
+@media(max-width:760px){main{grid-template-columns:1fr}.preview-wrap{min-height:410px}.templates{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="logo">🎁 ✨</div><h1>Little Joy</h1><p>Your personal corner for making small, meaningful online gifts.</p></header>
+<main>
+<section class="card" id="editor">
+<h2>Make a gift</h2>
+<p class="hint">Pick a template, add your own words, and create a link to share. You can also start with a blank design.</p>
+<div class="templates" role="group" aria-label="Gift templates">
+<button class="template active" data-kind="birthday">🎂 Birthday</button>
+<button class="template" data-kind="flowers">🌷 Flowers</button>
+<button class="template" data-kind="friendship">💛 Friendship</button>
+<button class="template" data-kind="letter">💌 Letter</button>
+</div>
+<label for="to">Gift is for</label><input id="to" maxlength="60" placeholder="e.g. Alex" value="Someone Special">
+<label for="title">Gift title</label><input id="title" maxlength="90" value="A little surprise for you">
+<label for="message">Your message</label><textarea id="message" maxlength="1200">I hope this little gift makes you smile. You deserve lovely things and happy moments!</textarea>
+<label for="from">From</label><input id="from" maxlength="60" value="Someone who cares">
+<label for="emoji">Main decoration</label><select id="emoji"><option>🎂</option><option>💐</option><option>💖</option><option>🌟</option><option>🧸</option><option>🎁</option><option>🌈</option><option>🦋</option><option>🌻</option><option>💌</option><option>🎮</option><option>🐱</option></select>
+<div class="buttons"><button class="primary" id="make">✨ Update gift</button><button class="secondary" id="reset">Reset</button></div>
+<p class="hint">First version: gifts are saved inside the share link, not on a server. Keep messages kind and avoid private information.</p>
+</section>
+<section class="card">
+<h2 id="previewHeading">Your gift preview</h2>
+<div class="preview-wrap"><article class="gift birthday" id="gift">
+<div class="emoji" id="pEmoji">🎂</div><div class="eyebrow" id="pTo">A little gift for Someone Special</div><h3 id="pTitle">A little surprise for you</h3><div class="message" id="pMessage">I hope this little gift makes you smile. You deserve lovely things and happy moments!</div><div class="from" id="pFrom">With care, Someone who cares</div>
+</article></div>
+<div class="buttons" id="shareButtons"><button class="primary" id="share">🔗 Create share link</button><button class="secondary" id="whatsapp">WhatsApp</button></div>
+<div class="buttons hidden" id="linkRow"><button class="secondary" id="copy">Copy link</button><button class="secondary" id="openLink">Open link</button></div>
+<p class="status" id="status" aria-live="polite">Your gift preview updates as you type.</p>
+</section>
+</main>
+<footer>Made with a little joy ✨ · Personal use</footer>
+<script>
+const $=id=>document.getElementById(id);
+const defaults={kind:"birthday",to:"Someone Special",title:"A little surprise for you",message:"I hope this little gift makes you smile. You deserve lovely things and happy moments!",from:"Someone who cares",emoji:"🎂"};
+let kind="birthday",shareURL="";
+const styles={birthday:{emoji:"🎂",title:"A little surprise for you"},flowers:{emoji:"💐",title:"Sending you flowers"},friendship:{emoji:"💖",title:"Lucky to have you"},letter:{emoji:"💌",title:"A note just for you"}};
+function getData(){return {kind,to:$("to").value.trim(),title:$("title").value.trim(),message:$("message").value,from:$("from").value.trim(),emoji:$("emoji").value}}
+function paint(){
+ const d=getData();$("gift").className="gift "+(styles[d.kind]?d.kind:"birthday");
+ $("pEmoji").textContent=d.emoji;$("pTo").textContent="A little gift for "+(d.to||"you");
+ $("pTitle").textContent=d.title||"A little surprise";$("pMessage").textContent=d.message;
+ $("pFrom").textContent=d.from?"With care, "+d.from:"With care";
+}
+function encode(d){const bytes=new TextEncoder().encode(JSON.stringify(d));let bin="";bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function decode(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";const bin=atob(s);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}
+function makeLink(){
+ const base=location.href.split("?")[0].split("#")[0];
+ if(location.protocol==="file:"){return null}
+ return base+"?gift="+encode(getData());
+}
+function showSharedGift(d){
+ kind=d.kind||"birthday";document.querySelectorAll(".template").forEach(b=>b.classList.toggle("active",b.dataset.kind===kind));
+ $("editor").classList.add("hidden");$("previewHeading").textContent="A gift for you 💝";
+ $("shareButtons").classList.add("hidden");$("linkRow").classList.add("hidden");
+ $("to").value=d.to||"";$("title").value=d.title||"";$("message").value=d.message||"";$("from").value=d.from||"";$("emoji").value=d.emoji||"🎁";
+ paint();$("status").textContent="This gift was shared with you. Enjoy!";document.title="A gift for you — Little Joy";
+}
+document.querySelectorAll(".template").forEach(b=>b.addEventListener("click",()=>{
+ kind=b.dataset.kind;document.querySelectorAll(".template").forEach(x=>x.classList.toggle("active",x===b));
+ $("emoji").value=styles[kind].emoji;$("title").value=styles[kind].title;paint();
+}));
+["to","title","message","from","emoji"].forEach(id=>$(id).addEventListener("input",()=>{paint();shareURL="";$("linkRow").classList.add("hidden");$("status").textContent="Gift updated. Create a new link when you're ready."}));
+$("make").addEventListener("click",()=>{paint();$("status").textContent="Your gift preview is updated. Looks good? Create a share link next."});
+$("reset").addEventListener("click",()=>{kind=defaults.kind;Object.keys(defaults).forEach(k=>{if($(k))$(k).value=defaults[k]});document.querySelectorAll(".template").forEach(b=>b.classList.toggle("active",b.dataset.kind===kind));paint();shareURL="";$("linkRow").classList.add("hidden");$("status").textContent="Reset to the starter gift."});
+$("share").addEventListener("click",()=>{shareURL=makeLink();if(!shareURL){$("status").textContent="This page is opened as a local file. Publish it to a website first; then the share link will work.";return}$("linkRow").classList.remove("hidden");$("status").textContent="Share link ready. Anyone with this link can view this gift.";});
+$("copy").addEventListener("click",async()=>{if(!shareURL)return;try{await navigator.clipboard.writeText(shareURL);$("status").textContent="Link copied! Paste it into WhatsApp or a message."}catch(e){$("status").textContent="Copy was blocked by the browser. Use the link in the address bar after creating it: "+shareURL}});
+$("openLink").addEventListener("click",()=>{if(shareURL)location.href=shareURL});
+$("whatsapp").addEventListener("click",()=>{if(!shareURL){shareURL=makeLink();if(!shareURL){$("status").textContent="Publish the website first, then create a WhatsApp gift link.";return}}window.open("https://wa.me/?text="+encodeURIComponent("I made a little online gift for you 🎁 Open it here: "+shareURL),"_blank","noopener")});
+const params=new URLSearchParams(location.search);if(params.has("gift")){try{showSharedGift(decode(params.get("gift")))}catch(e){$("status").textContent="This gift link looks incomplete or invalid."}}else{paint()}
+</script>
+</body>
+</html>
